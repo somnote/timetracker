@@ -164,7 +164,9 @@
       gap: 6px;
       justify-content: flex-start;
       width: 100%;
+      max-width: 320px;
       max-height: 200px;
+      overflow-x: auto;
       overflow-y: auto;
       transition: max-height 0.3s ease;
     }
@@ -657,14 +659,12 @@
     
     // 전체 리셋 함수
     function resetAll() {
-      if (confirm('모든 할 일을 삭제하시겠습니까?')) {
-        tasks.length = 0;
-        Object.keys(taskColors).forEach(key => delete taskColors[key]);
-        colorIndex = 0;
-        renderTaskList();
-        renderTimetable(tasks);
-        saveTasks(); // 리셋 후 저장
-      }
+      tasks.length = 0;
+      Object.keys(taskColors).forEach(key => delete taskColors[key]);
+      colorIndex = 0;
+      renderTaskList();
+      renderTimetable(tasks);
+      saveTasks(); // 리셋 후 저장
     }
     
     // 할 일 추가 이벤트
