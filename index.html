@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- 둥근모꼴Neo 폰트 적용 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/DungGeunMo.woff" as="font" type="font/woff" crossorigin>
+  <style>
+    @font-face {
+      font-family: 'DungGeunMo';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/DungGeunMo.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      font-family: 'DungGeunMo', sans-serif;
+      letter-spacing: -1px;
+      background: #f6f8fa;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    h1 {
+      margin-top: 32px;
+      font-size: 2.2rem;
+      color: #222;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: -1px;
+    }
+    #main-card {
+      background: #fff;
+      border: 2.5px solid #C4DCFF;
+      box-shadow: 0 0 0 4px #eaf4ff;
+      border-radius: 18px;
+      padding: 24px 18px 18px 18px;
+      margin: 32px auto 0 auto;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #task-form {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 14px;
+      width: 100%;
+      justify-content: center;
+    }
+    #task-form input[type="text"] {
+      width: 70px;
+      min-width: 50px;
+      max-width: 100px;
+      padding: 4px 7px;
+      border-radius: 8px;
+      border: 2px solid #C4DCFF;
+      font-size: 1rem;
+      outline: none;
+      background: #fffbe7;
+      font-family: 'DungGeunMo', sans-serif;
+      transition: border 0.2s;
+    }
+    #task-form input[type="number"] {
+      width: 32px;
+      padding: 4px 2px;
+      border-radius: 8px;
+      border: 2px solid #C4DCFF;
+      font-size: 1rem;
+      outline: none;
+      background: #fffbe7;
+      font-family: 'DungGeunMo', sans-serif;
+      text-align: center;
+      transition: border 0.2s;
+    }
+    #task-form input:focus {
+      border: 2px solid #AFC3C4;
+      background: #fff;
+    }
+    #task-form button {
+      background: #F6CBD5;
+      color: #222;
+      border: 2px solid #F6CBD5;
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 1.2rem;
+      font-family: 'DungGeunMo', sans-serif;
+      font-weight: normal;
+      cursor: pointer;
+      transition: background 0.2s, border 0.2s;
+      box-shadow: 2px 2px 0 #eaf4ff;
+      min-width: 32px;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #reset-btn {
+      background: #F6CBD5;
+      color: #222;
+      border: 2px solid #F6CBD5;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 1rem;
+      font-family: 'DungGeunMo', sans-serif;
+      font-weight: normal;
+      cursor: pointer;
+      margin-left: 4px;
+      transition: background 0.2s;
+      height: 32px;
+      line-height: 1;
+      vertical-align: middle;
+    }
+    #task-form button:hover, #reset-btn:hover {
+      background: #EBCEFF;
+      border: 2px solid #EBCEFF;
+    }
+    #task-list {
+      margin-bottom: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      width: 100%;
+    }
+    .task-label {
+      display: flex;
+      align-items: center;
+      background: #fffbe7;
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 1rem;
+      font-weight: normal;
+      gap: 6px;
+      border: 2px solid #C4DCFF;
+      font-family: 'DungGeunMo', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .color-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-right: 2px;
+      border: 2px solid #AFC3C4;
+    }
+    #timetable-wrap {
+      background: #fff;
+      border: 2.5px solid #C4DCFF;
+      border-radius: 16px;
+      box-shadow: 0 0 0 4px #eaf4ff;
+      padding: 12px 8px 8px 8px;
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+    }
+    #timetable {
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      min-width: 340px;
+      font-family: 'DungGeunMo', sans-serif;
+    }
+    #timetable th, #timetable td {
+      padding: 0;
+      text-align: center;
+      font-size: 1rem;
+      border: 2px solid #C4DCFF;
+      width: 38px;
+      height: 28px;
+      min-width: 38px;
+      min-height: 28px;
+      background: #fff;
+      transition: background 0.2s;
+      font-family: 'DungGeunMo', sans-serif;
+    }
+    #timetable th {
+      background: #C4DCFF;
+      color: #222;
+      font-weight: bold;
+      height: 30px;
+      border-bottom: 2.5px solid #AFC3C4;
+      letter-spacing: -1px;
+    }
+    .hour-label {
+      background: #FFF0CA;
+      font-weight: bold;
+      width: 44px;
+      min-width: 44px;
+      color: #888;
+      border-right: 2px solid #C4DCFF;
+      border-left: none;
+      font-family: 'DungGeunMo', sans-serif;
+    }
+    .cell-block {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      overflow: hidden;
+      color: #222;
+      letter-spacing: -0.5px;
+      font-family: 'DungGeunMo', sans-serif;
+      white-space: nowrap;
+    }
+    
+    .task-label {
+      display: flex;
+      align-items: center;
+      background: #fffbe7;
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 1rem;
+      font-weight: normal;
+      gap: 6px;
+      border: 2px solid #C4DCFF;
+      font-family: 'DungGeunMo', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .task-label:hover {
+      background: #ffe8a8;
+      transform: translateY(-1px);
+    }
+    
+    .task-label.editing {
+      background: #C4DCFF;
+      border-color: #AFC3C4;
+    }
+    
+    .delete-btn {
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      margin-left: 4px;
+      font-family: 'DungGeunMo', sans-serif;
+    }
+    
+    .delete-btn:hover {
+      background: #ff5252;
+    }
+    
+    .reset-btn {
+      background: #ff6b6b;
+      color: white;
+      border: 2px solid #ff5252;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 1rem;
+      font-family: 'DungGeunMo', sans-serif;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 12px;
+    }
+    
+    .reset-btn:hover {
+      background: #ff5252;
+    }
+    .add-btn {
+      background: #F6CBD5;
+      color: #222;
+      border: 2px solid #F6CBD5;
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 1.2rem;
+      font-family: 'DungGeunMo', sans-serif;
+      font-weight: normal;
+      cursor: pointer;
+      transition: background 0.2s, border 0.2s;
+      box-shadow: 2px 2px 0 #eaf4ff;
+      min-width: 32px;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .add-btn:hover {
+      background: #EBCEFF;
+      border: 2px solid #EBCEFF;
+    }
+    .reset-btn {
+      background: #F6CBD5;
+      color: #222;
+      border: 2px solid #F6CBD5;
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 1.2rem;
+      font-family: 'DungGeunMo', sans-serif;
+      font-weight: normal;
+      cursor: pointer;
+      transition: background 0.2s, border 0.2s;
+      box-shadow: 2px 2px 0 #eaf4ff;
+      min-width: 32px;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .reset-btn:hover {
+      background: #EBCEFF;
+      border: 2px solid #EBCEFF;
+    }
+    .form-btn {
+      background: #F6CBD5;
+      color: #222;
+      border: 2px solid #F6CBD5;
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 1.2rem;
+      font-family: 'DungGeunMo', sans-serif;
+      font-weight: normal;
+      cursor: pointer;
+      transition: background 0.2s, border 0.2s;
+      box-shadow: 2px 2px 0 #eaf4ff;
+      min-width: 36px;
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 4px;
+    }
+    .form-btn:hover {
+      background: #EBCEFF;
+      border: 2px solid #EBCEFF;
+    }
+    .add-btn, .reset-btn { display: none !important; }
+  </style>
+</head>
+<body>
+  
+  <div id="main-card">
+    <form id="task-form" autocomplete="off" style="flex-wrap:wrap;">
+      <input type="text" id="task-name" placeholder="할일" maxlength="10" required>
+      <input type="number" id="start-hour" min="0" max="23" placeholder="시" required>
+      <span>:</span>
+      <input type="number" id="start-min" min="0" max="59" placeholder="분" style="width:28px;">
+      <span>~</span>
+      <input type="number" id="end-hour" min="0" max="23" placeholder="시" required>
+      <span>:</span>
+      <input type="number" id="end-min" min="0" max="59" placeholder="분" style="width:28px;">
+      <button type="button" id="add-btn" class="form-btn">+</button>
+      <button type="button" id="reset-btn" class="form-btn">R</button>
+    </form>
+    <div id="task-list"></div>
+    <div id="timetable-wrap">
+      <table id="timetable">
+        <thead>
+          <tr>
+            <th class="hour-label"></th>
+            <th>00</th>
+            <th>10</th>
+            <th>20</th>
+            <th>30</th>
+            <th>40</th>
+            <th>50</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JS로 시간표 행이 채워집니다 -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    // 파스텔톤 색상 배열 (구글 캘린더 팔레트)
+    const pastelColors = [
+      "#FFF0CA", "#F6CBD5", "#C4DCFF", "#EBCEFF", "#D4E9D8",
+      "#FFDFBD", "#C6CFE0", "#AFC3C4", "#E2CDD9"
+    ];
+    let colorIndex = 0;
+    const taskColors = {}; // {할일: 색상}
+
+    // 시간/분 배열
+    const hours = [];
+    for (let h = 9; h <= 19; h++) hours.push(h);
+    const minutes = [0, 10, 20, 30, 40, 50];
+
+    // 테이블 행 생성
+    const timetableBody = document.querySelector("#timetable tbody");
+    for (let h of hours) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td class="hour-label">${h}</td>` +
+        minutes.map(() => `<td><div class="cell-block"></div></td>`).join('');
+      timetableBody.appendChild(tr);
+    }
+
+    // 할 일 목록 표시
+    function renderTaskList() {
+      const taskListDiv = document.getElementById("task-list");
+      taskListDiv.innerHTML = "";
+      tasks.forEach((task, index) => {
+        const label = document.createElement("span");
+        label.className = "task-label";
+        label.innerHTML = `
+          <span class="color-dot" style="background:${task.color}"></span>
+          <span class="task-name">${task.name}</span>
+          <button class="delete-btn" onclick="deleteTask(${index})">×</button>
+        `;
+        
+        // 클릭 시 수정 모드
+        label.addEventListener('click', (e) => {
+          if (!e.target.classList.contains('delete-btn')) {
+            editTask(index);
+          }
+        });
+        
+        taskListDiv.appendChild(label);
+      });
+    }
+
+    // 시간표에 할 일 표시 (시작 셀에만 텍스트, 한 줄만)
+    function renderTimetable(tasks) {
+      // 모든 셀 초기화
+      document.querySelectorAll(".cell-block").forEach(cell => {
+        cell.style.background = "";
+        cell.textContent = "";
+      });
+      tasks.forEach(task => {
+        const { name, start, end, color } = task;
+        let [sh, sm] = start.split(":").map(Number);
+        let [eh, em] = end.split(":").map(Number);
+        for (let h = sh; h <= eh; h++) {
+          for (let mIdx = 0; mIdx < minutes.length; mIdx++) {
+            const m = minutes[mIdx];
+            const isStart = (h === sh && m < sm);
+            const isEnd = (h === eh && m > em);
+            if (isStart || isEnd) continue;
+            if (
+              (h > sh || (h === sh && m >= sm)) &&
+              (h < eh || (h === eh && m <= em))
+            ) {
+              const row = h - 9;
+              const cell = timetableBody.rows[row]?.cells[mIdx + 1]?.firstChild;
+              if (cell) {
+                cell.style.background = color;
+                // 시작 셀에만 할 일 전체 표시, 한 줄만
+                if (h === sh && m === sm) {
+                  cell.textContent = name;
+                  cell.style.whiteSpace = "nowrap";
+                } else {
+                  cell.textContent = "";
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // 할 일 삭제 함수
+    function deleteTask(index) {
+      if (confirm('이 할 일을 삭제하시겠습니까?')) {
+        tasks.splice(index, 1);
+        renderTaskList();
+        renderTimetable(tasks);
+      }
+    }
+    
+    // 로그 기록 함수
+    function addLog(msg) {
+      const logArea = document.getElementById('log-area');
+      const now = new Date();
+      const time = now.toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit', second: '2-digit'});
+      logArea.innerHTML = `<div>[${time}] ${msg}</div>` + logArea.innerHTML;
+    }
+
+    let editIndex = null;
+
+    // 할 일 추가/수정 버튼 이벤트
+    document.getElementById("add-btn").onclick = function() {
+      const name = document.getElementById("task-name").value.trim();
+      let sh = document.getElementById("start-hour").value;
+      let sm = document.getElementById("start-min").value;
+      let eh = document.getElementById("end-hour").value;
+      let em = document.getElementById("end-min").value;
+      sh = sh ? String(Number(sh)).padStart(2, "0") : "00";
+      sm = sm ? String(Number(sm)).padStart(2, "0") : "00";
+      eh = eh ? String(Number(eh)).padStart(2, "0") : "00";
+      em = em ? String(Number(em)).padStart(2, "0") : "00";
+      if (!name) return;
+      if (Number(sh) < 9 || Number(sh) > 19 || Number(eh) < 9 || Number(eh) > 19) {
+        alert("시간은 9~19시 사이로 입력해주세요.");
+        return;
+      }
+      if (sh > eh || (sh === eh && sm > em)) {
+        alert("시작 시간이 끝 시간보다 빠르거나 같아야 합니다.");
+        return;
+      }
+      if (editIndex !== null) {
+        // 수정 모드
+        const old = tasks[editIndex];
+        tasks[editIndex] = { name, start: `${sh}:${sm}`, end: `${eh}:${em}`, color: old.color };
+        renderTaskList();
+        renderTimetable(tasks);
+        editIndex = null;
+        // 버튼 텍스트 변경 제거
+      } else {
+        // 추가 모드
+        if (!taskColors[name]) {
+          taskColors[name] = pastelColors[colorIndex % pastelColors.length];
+          colorIndex++;
+        }
+        tasks.push({ name, start: `${sh}:${sm}`, end: `${eh}:${em}`, color: taskColors[name] });
+        renderTaskList();
+        renderTimetable(tasks);
+      }
+      document.getElementById("task-form").reset();
+    };
+
+    // 할 일 수정 함수
+    function editTask(index) {
+      const task = tasks[index];
+      document.getElementById("task-name").value = task.name;
+      document.getElementById("start-hour").value = task.start.split(":")[0];
+      document.getElementById("start-min").value = task.start.split(":")[1];
+      document.getElementById("end-hour").value = task.end.split(":")[0];
+      document.getElementById("end-min").value = task.end.split(":")[1];
+      editIndex = index;
+      // 버튼 텍스트 변경 제거
+    }
+    
+    // 전체 리셋 함수
+    function resetAll() {
+      if (confirm('모든 할 일을 삭제하시겠습니까?')) {
+        tasks.length = 0;
+        Object.keys(taskColors).forEach(key => delete taskColors[key]);
+        colorIndex = 0;
+        renderTaskList();
+        renderTimetable(tasks);
+      }
+    }
+    
+    // 할 일 추가 이벤트
+    const tasks = [];
+    document.getElementById("task-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("task-name").value.trim();
+      let sh = document.getElementById("start-hour").value;
+      let sm = document.getElementById("start-min").value;
+      let eh = document.getElementById("end-hour").value;
+      let em = document.getElementById("end-min").value;
+
+      // 시/분 입력값 보정
+      sh = sh ? String(Number(sh)).padStart(2, "0") : "00";
+      sm = sm ? String(Number(sm)).padStart(2, "0") : "00";
+      eh = eh ? String(Number(eh)).padStart(2, "0") : "00";
+      em = em ? String(Number(em)).padStart(2, "0") : "00";
+
+      // 분 입력 없으면 00으로 자동 처리
+      if (!document.getElementById("start-min").value) sm = "00";
+      if (!document.getElementById("end-min").value) em = "00";
+
+      // 범위 체크 (9~19시만 허용)
+      if (Number(sh) < 9 || Number(sh) > 19 || Number(eh) < 9 || Number(eh) > 19) {
+        alert("시간은 9~19시 사이로 입력해주세요.");
+        return;
+      }
+      // 시작이 끝보다 늦으면 오류
+      if (sh > eh || (sh === eh && sm > em)) {
+        alert("시작 시간이 끝 시간보다 빠르거나 같아야 합니다.");
+        return;
+      }
+      // 색상 지정
+      if (!taskColors[name]) {
+        taskColors[name] = pastelColors[colorIndex % pastelColors.length];
+        colorIndex++;
+      }
+      tasks.push({ name, start: `${sh}:${sm}`, end: `${eh}:${em}`, color: taskColors[name] });
+      renderTaskList();
+      renderTimetable(tasks);
+      document.getElementById("task-form").reset();
+    });
+
+    // 리셋 버튼 이벤트
+    document.getElementById("reset-btn").addEventListener("click", resetAll);
+    
+    // 초기 렌더링
+    renderTaskList();
+    renderTimetable(tasks);
+  </script>
+</body>
+</html>
