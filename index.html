@@ -460,7 +460,7 @@
 
     // 시간/분 배열
     const hours = [];
-    for (let h = 9; h <= 22; h++) hours.push(h);
+    for (let h = 8; h <= 22; h++) hours.push(h);
     const minutes = [0, 10, 20, 30, 40, 50];
 
     // 테이블 행 생성
@@ -615,8 +615,8 @@
       eh = eh ? String(Number(eh)).padStart(2, "0") : "00";
       em = em ? String(Number(em)).padStart(2, "0") : "00";
       if (!name) return;
-      if (Number(sh) < 9 || Number(sh) > 19 || Number(eh) < 9 || Number(eh) > 19) {
-        alert("시간은 9~19시 사이로 입력해주세요.");
+      if (Number(sh) < 8 || Number(sh) > 22 || Number(eh) < 8 || Number(eh) > 22) {
+        alert("시간은 8~22시 사이로 입력해주세요.");
         return;
       }
       if (sh > eh || (sh === eh && sm > em)) {
@@ -687,9 +687,9 @@
       if (!document.getElementById("start-min").value) sm = "00";
       if (!document.getElementById("end-min").value) em = "00";
 
-      // 범위 체크 (9~19시만 허용)
-      if (Number(sh) < 9 || Number(sh) > 19 || Number(eh) < 9 || Number(eh) > 19) {
-        alert("시간은 9~19시 사이로 입력해주세요.");
+      // 범위 체크 (8~22시만 허용)
+      if (Number(sh) < 8 || Number(sh) > 22 || Number(eh) < 8 || Number(eh) > 22) {
+        alert("시간은 8~22시 사이로 입력해주세요.");
         return;
       }
       // 시작이 끝보다 늦으면 오류
