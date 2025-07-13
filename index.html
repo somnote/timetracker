@@ -12,7 +12,7 @@
     body {
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
       letter-spacing: -1px;
-      background: #f6f8fa;
+      background: transparent;
       margin: 0;
       padding: 0;
       min-height: 100vh;
@@ -26,9 +26,9 @@
       letter-spacing: -1px;
     }
     #main-card {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9);
       border: 2px solid #C4DCFF;
-      box-shadow: 0 0 0 2px #eaf4ff;
+      box-shadow: 0 0 0 2px rgba(234, 244, 255, 0.8);
       border-radius: 14px;
       padding: 18px 12px 12px 12px;
       margin: 24px auto 0 auto;
@@ -36,6 +36,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      backdrop-filter: blur(10px);
     }
     #task-form {
       display: flex;
@@ -54,7 +55,7 @@
       border: 1.5px solid #C4DCFF;
       font-size: 1.05rem;
       outline: none;
-      background: #fffbe7;
+      background: rgba(255, 251, 231, 0.9);
       font-family: 'Pretendard', sans-serif;
       font-weight: 300;
       transition: border 0.2s;
@@ -66,7 +67,7 @@
       border: 1.5px solid #C4DCFF;
       font-size: 1.05rem;
       outline: none;
-      background: #fffbe7;
+      background: rgba(255, 251, 231, 0.9);
       font-family: 'Pretendard', sans-serif;
       text-align: center;
       font-weight: 300;
@@ -87,7 +88,7 @@
     }
     #task-form input:focus {
       border: 1.5px solid #AFC3C4;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.95);
     }
     #task-form button {
       background: #F6CBD5;
@@ -100,7 +101,7 @@
       font-weight: 300;
       cursor: pointer;
       transition: background 0.2s, border 0.2s;
-      box-shadow: 2px 2px 0 #eaf4ff;
+      box-shadow: 2px 2px 0 rgba(234, 244, 255, 0.8);
       min-width: 32px;
       min-height: 32px;
       display: flex;
@@ -179,7 +180,7 @@
     .task-label {
       display: flex;
       align-items: center;
-      background: #fffbe7;
+      background: rgba(255, 251, 231, 0.9);
       border-radius: 7px;
       padding: 3px 9px;
       font-size: 1.05rem;
@@ -198,30 +199,21 @@
       margin-right: 2px;
       border: 1.7px solid #AFC3C4;
     }
-    /* 
-      #timetable-wrap는 시간표 테이블을 감싸는 div의 스타일입니다.
-      - background: #fff;         // 배경색을 흰색으로 설정
-      - border: 2px solid #C4DCFF; // 연한 파란색 실선 테두리
-      - border-radius: 16px;      // 모서리를 16px만큼 둥글게
-      - box-shadow: 0 0 0 2.5px #eaf4ff; // 연한 파란색 그림자 효과(테두리처럼 보임)
-      - padding: 24px 18px 18px 18px; // 위 24px, 오른쪽 18px, 아래 18px, 왼쪽 18px 여백
-      - margin-top: 6px;          // 위쪽에 6px 간격
-      - display: flex;            // flexbox 레이아웃 사용
-      - justify-content: center;  // 내부 컨텐츠를 가로 중앙 정렬
-    */
+    
     #timetable-wrap {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9);
       border: 2px solid #C4DCFF;
       border-radius: 16px;
-      box-shadow: 0 0 0 2.5px #eaf4ff;
+      box-shadow: 0 0 0 2.5px rgba(234, 244, 255, 0.8);
       padding: 15px 15px 15px 15px;
       margin-top: 6px;
       display: flex;
       justify-content: center;
+      backdrop-filter: blur(10px);
     }
     #timetable {
       border-collapse: collapse;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 7px;
       min-width: 270px;
       font-family: 'Pretendard', sans-serif;
@@ -237,13 +229,13 @@
       height: 22px;
       min-width: 28px;
       min-height: 22px;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9);
       transition: background 0.2s;
       font-family: 'Pretendard', sans-serif;
       font-weight: 300;
     }
     #timetable th {
-      background: #C4DCFF;
+      background: rgba(196, 220, 255, 0.9);
       color: #222;
       font-weight: 300;
       height: 24px;
@@ -251,7 +243,7 @@
       letter-spacing: -1px;
     }
     .hour-label {
-      background: #FFF0CA;
+      background: rgba(255, 240, 202, 0.9);
       font-weight: 300;
       width: 28px;
       min-width: 28px;
@@ -281,7 +273,7 @@
     .task-label {
       display: flex;
       align-items: center;
-      background: #fffbe7;
+      background: rgba(255, 251, 231, 0.9);
       border-radius: 8px;
       padding: 4px 10px;
       font-size: 1rem;
@@ -294,12 +286,12 @@
     }
     
     .task-label:hover {
-      background: #ffe8a8;
+      background: rgba(255, 232, 168, 0.9);
       transform: translateY(-1px);
     }
     
     .task-label.editing {
-      background: #C4DCFF;
+      background: rgba(196, 220, 255, 0.9);
       border-color: #AFC3C4;
     }
     
@@ -348,7 +340,7 @@
       font-weight: 300;
       cursor: pointer;
       transition: background 0.2s, border 0.2s;
-      box-shadow: 2px 2px 0 #eaf4ff;
+      box-shadow: 2px 2px 0 rgba(234, 244, 255, 0.8);
       min-width: 32px;
       min-height: 32px;
       display: flex;
@@ -370,7 +362,7 @@
       font-weight: 300;
       cursor: pointer;
       transition: background 0.2s, border 0.2s;
-      box-shadow: 2px 2px 0 #eaf4ff;
+      box-shadow: 2px 2px 0 rgba(234, 244, 255, 0.8);
       min-width: 32px;
       min-height: 32px;
       display: flex;
@@ -392,7 +384,7 @@
       font-weight: 300;
       cursor: pointer;
       transition: background 0.2s, border 0.2s;
-      box-shadow: 1.5px 1.5px 0 #eaf4ff;
+      box-shadow: 1.5px 1.5px 0 rgba(234, 244, 255, 0.8);
       min-width: 24px;
       min-height: 24px;
       display: flex;
